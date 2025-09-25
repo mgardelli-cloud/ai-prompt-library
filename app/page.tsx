@@ -10,6 +10,8 @@ export default async function HomePage() {
 
   try {
     console.log("[v0] Attempting to fetch prompts from database...")
+    console.log("[v0] Supabase URL:", process.env.NEXT_PUBLIC_SUPABASE_URL)
+    console.log("[v0] Supabase Key exists:", !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY)
 
     // First, let's try to verify the table exists
     const { data: tableCheck, error: tableError } = await supabase
@@ -54,7 +56,7 @@ export default async function HomePage() {
           <div className="mb-6 p-4 bg-destructive/10 border border-destructive/20 rounded-lg">
             <h3 className="font-medium text-destructive mb-2">Database Error</h3>
             <p className="text-sm text-destructive/80">
-              {error.message || "Failed to load prompts. Please check the database connection."}
+              {(error as any)?.message || "Failed to load prompts. Please check the database connection."}
             </p>
             <details className="mt-2">
               <summary className="text-xs text-destructive/60 cursor-pointer">Technical Details</summary>

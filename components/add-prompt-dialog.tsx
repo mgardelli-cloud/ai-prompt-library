@@ -66,7 +66,7 @@ export function AddPromptDialog({ open, onOpenChange }: AddPromptDialogProps) {
     const supabase = createClient()
 
     try {
-      const { error } = await supabase.from("prompts").insert({
+      console.log("[DEBUG] Inserting prompt:", {
         title: title.trim(),
         description: description.trim() || null,
         content: content.trim(),
@@ -75,7 +75,21 @@ export function AddPromptDialog({ open, onOpenChange }: AddPromptDialogProps) {
         is_public: isPublic,
       })
 
-      if (error) throw error
+      const { data, error } = await supabase.from("prompts").insert({
+        title: title.trim(),
+        description: description.trim() || null,
+        content: content.trim(),
+        category,
+        tags,
+        is_public: isPublic,
+      })
+
+      console.log("[DEBUG] Supabase response:", { data, error })
+
+      if (error) {
+        console.error("[DEBUG] Supabase error details:", error)
+        throw error
+      }
 
       toast({
         title: "Prompt added",
