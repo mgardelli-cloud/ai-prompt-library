@@ -37,48 +37,6 @@ Una libreria moderna e intuitiva per salvare, categorizzare e cercare i tuoi pro
 - Account Supabase
 - Account Vercel (per il deploy)
 
-### Setup Locale
-
-1. **Clona il repository**
-   \`\`\`bash
-   git clone https://github.com/tuo-username/ai-prompt-library.git
-   cd ai-prompt-library
-   \`\`\`
-
-2. **Installa le dipendenze**
-   \`\`\`bash
-   npm install
-   # oppure
-   pnpm install
-   \`\`\`
-
-3. **Configura le variabili d'ambiente**
-   
-   Crea un file `.env.local` nella root del progetto:
-   \`\`\`env
-   NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-   SUPABASE_URL=your_supabase_project_url
-   SUPABASE_ANON_KEY=your_supabase_anon_key
-   \`\`\`
-
-4. **Setup del Database**
-   
-   Esegui gli script SQL in Supabase nell'ordine:
-   - `scripts/001_create_prompts_schema.sql`
-   - `scripts/002_seed_sample_prompts.sql`
-   - `scripts/003_create_rpc_function.sql`
-
-5. **Avvia il server di sviluppo**
-   \`\`\`bash
-   npm run dev
-   # oppure
-   pnpm dev
-   \`\`\`
-
-6. **Apri il browser**
-   
-   Vai su [http://localhost:3000](http://localhost:3000)
 
 ## 🗄️ Struttura del Database
 
@@ -185,23 +143,6 @@ L'app è compatibile con qualsiasi piattaforma che supporta Next.js:
 - Railway
 - DigitalOcean App Platform
 - AWS Amplify
-
-## 🤝 Contribuire
-
-I contributi sono benvenuti! Per contribuire:
-
-1. **Fork** il progetto
-2. **Crea** un branch per la tua feature (`git checkout -b feature/AmazingFeature`)
-3. **Commit** le tue modifiche (`git commit -m 'Add some AmazingFeature'`)
-4. **Push** al branch (`git push origin feature/AmazingFeature`)
-5. **Apri** una Pull Request
-
-### Linee Guida per i Contributi
-
-- Segui le convenzioni di codice esistenti
-- Aggiungi test per le nuove funzionalità
-- Aggiorna la documentazione se necessario
-- Assicurati che il build passi
 
 
 ## 📋 Future Roadmap
