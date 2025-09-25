@@ -57,8 +57,7 @@ Una libreria moderna e intuitiva per salvare, categorizzare e cercare i tuoi pro
 
 ## 🏗️ Struttura del Progetto
 
-\`\`\`
-'''
+````
 ai-prompt-library/
 ├── app/                   # App Router di Next.js
 │   ├── globals.css        # Stili globali e temi
@@ -77,8 +76,7 @@ ai-prompt-library/
 │   └── copy-utils.ts      # Utilities per copia
 ├── scripts/               # Script SQL per il database
 └── public/                # Asset statici
-'''
-\`\`\`
+````
 
 ## 🎨 Personalizzazione
 
