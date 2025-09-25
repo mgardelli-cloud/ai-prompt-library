@@ -203,17 +203,8 @@ I contributi sono benvenuti! Per contribuire:
 - Aggiorna la documentazione se necessario
 - Assicurati che il build passi
 
-## 🐛 Segnalazione Bug
 
-Hai trovato un bug? [Apri una issue](https://github.com/tuo-username/ai-prompt-library/issues) con:
-
-- Descrizione dettagliata del problema
-- Passi per riprodurre il bug
-- Comportamento atteso vs comportamento attuale
-- Screenshots se applicabili
-- Informazioni sul browser/sistema operativo
-
-## 📋 Roadmap
+## 📋 Future Roadmap
 
 - [ ] Autenticazione utenti multipli
 - [ ] Condivisione prompt pubblici/privati
@@ -224,11 +215,7 @@ Hai trovato un bug? [Apri una issue](https://github.com/tuo-username/ai-prompt-l
 - [ ] Plugin per editor di codice
 - [ ] App mobile (React Native)
 
-## 📄 Licenza
-
-Questo progetto è rilasciato sotto la licenza MIT. Vedi il file [LICENSE](LICENSE) per i dettagli.
-
-## 🙏 Ringraziamenti
+## Ringraziamenti
 
 - [Next.js](https://nextjs.org/) per il framework
 - [Supabase](https://supabase.com/) per il backend
@@ -237,11 +224,6 @@ Questo progetto è rilasciato sotto la licenza MIT. Vedi il file [LICENSE](LICEN
 - [Lucide](https://lucide.dev/) per le icone
 - [Vercel](https://vercel.com/) per l'hosting
 
-## 📞 Supporto
-
-- 📧 Email: [tuo-email@example.com](mailto:tuo-email@example.com)
-- 🐦 Twitter: [@tuo-twitter](https://twitter.com/tuo-twitter)
-- 💬 Discord: [Server Discord](https://discord.gg/tuo-server)
 
 ---
 
