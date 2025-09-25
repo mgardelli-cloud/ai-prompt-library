@@ -228,6 +228,5 @@ I contributi sono benvenuti! Per contribuire:
 ---
 
 <div align="center">
-  <p>Realizzato con ❤️ da <a href="https://github.com/tuo-username">Il Tuo Nome</a></p>
-  <p>Se questo progetto ti è stato utile, considera di dargli una ⭐!</p>
+  <p>Realizzato con ❤️ da <a href="https://github.com/tuo-username">Gardo</a></p>
 </div>
