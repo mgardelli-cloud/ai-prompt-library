@@ -169,5 +169,5 @@ L'app è compatibile con qualsiasi piattaforma che supporta Next.js:
 ---
 
 <div align="center">
-  <p>Realizzato da <a href="https://github.com/tuo-username">Gardo</a></p>
+  <p>Realizzato da <a href="https://github.com/mgardelli-cloud">Gardo</a></p>
 </div>
