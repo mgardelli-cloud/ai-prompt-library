@@ -84,7 +84,7 @@ ai-prompt-library/
 
 L'app supporta temi personalizzabili tramite CSS custom properties in `app/globals.css`:
 
-\`\`\`css
+````css
 :root {
   --background: 0 0% 100%;
   --foreground: 240 10% 3.9%;
@@ -98,7 +98,7 @@ L'app supporta temi personalizzabili tramite CSS custom properties in `app/globa
   --primary: 0 0% 98%;
   /* ... altri colori */
 }
-\`\`\`
+````
 
 ### Categorie
 
@@ -120,11 +120,11 @@ const categories = [
 ### Deploy su Vercel
 
 1. **Push su GitHub**
-   \`\`\`bash
+  ```` bash
    git add .
    git commit -m "Ready for deploy"
    git push origin main
-   \`\`\`
+````
 
 2. **Connetti a Vercel**
    - Vai su [vercel.com](https://vercel.com)
