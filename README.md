@@ -58,24 +58,26 @@ Una libreria moderna e intuitiva per salvare, categorizzare e cercare i tuoi pro
 ## 🏗️ Struttura del Progetto
 
 \`\`\`
+'''
 ai-prompt-library/
-├── app/                    # App Router di Next.js
+├── app/                   # App Router di Next.js
 │   ├── globals.css        # Stili globali e temi
 │   ├── layout.tsx         # Layout principale
 │   └── page.tsx           # Homepage
 ├── components/            # Componenti React
-│   ├── ui/               # Componenti UI di shadcn
-│   ├── header.tsx        # Header dell'app
+│   ├── ui/                # Componenti UI di shadcn
+│   ├── header.tsx         # Header dell'app
 │   ├── prompt-gallery.tsx # Galleria dei prompt
 │   ├── search-filters.tsx # Filtri di ricerca
-│   ├── theme-toggle.tsx  # Toggle tema scuro/chiaro
+│   ├── theme-toggle.tsx   # Toggle tema scuro/chiaro
 │   └── ...
-├── lib/                  # Utilities e configurazioni
-│   ├── supabase/        # Client Supabase
-│   ├── utils.ts         # Utility functions
-│   └── copy-utils.ts    # Utilities per copia
-├── scripts/             # Script SQL per il database
-└── public/              # Asset statici
+├── lib/                   # Utilities e configurazioni
+│   ├── supabase/          # Client Supabase
+│   ├── utils.ts           # Utility functions
+│   └── copy-utils.ts      # Utilities per copia
+├── scripts/               # Script SQL per il database
+└── public/                # Asset statici
+'''
 \`\`\`
 
 ## 🎨 Personalizzazione
