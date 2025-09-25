@@ -104,7 +104,7 @@ L'app supporta temi personalizzabili tramite CSS custom properties in `app/globa
 
 Modifica le categorie disponibili in `components/search-filters.tsx`:
 
-\`\`\`typescript
+```` typescript
 const categories = [
   "Writing",
   "Coding", 
@@ -113,7 +113,7 @@ const categories = [
   "Business",
   // Aggiungi le tue categorie
 ];
-\`\`\`
+````
 
 ## 🚀 Deploy
 
