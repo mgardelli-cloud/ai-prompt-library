@@ -18,21 +18,6 @@ Una libreria moderna e intuitiva per salvare, categorizzare e cercare i tuoi pro
 - **⚡ Performance**: Caricamento veloce con Next.js 14 e caching intelligente
 - **🔒 Sicurezza**: Row Level Security con Supabase per proteggere i dati
 
-## 🚀 Demo Live
-
-[Visualizza Demo](https://ai-prompt-library.vercel.app) *(sostituisci con il tuo URL)*
-
-## 📸 Screenshots
-
-### Interfaccia Principale
-![Main Interface](public/placeholder.svg)
-
-### Ricerca Avanzata
-![Advanced Search](public/placeholder.svg)
-
-### Tema Scuro
-![Dark Theme](public/placeholder.svg)
-
 ## 🛠️ Tecnologie Utilizzate
 
 - **Frontend**: Next.js 14, React 19, TypeScript
