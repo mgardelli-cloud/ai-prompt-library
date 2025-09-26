@@ -35,6 +35,7 @@ interface PromptCardProps {
 export function PromptCard({ prompt }: PromptCardProps) {
   const [showPreview, setShowPreview] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
+  const [dropdownOpen, setDropdownOpen] = useState(false)
 
   const handleCopyUsage = async () => {
     const supabase = createClient()
@@ -67,6 +68,8 @@ export function PromptCard({ prompt }: PromptCardProps) {
   }
 
   const handleDelete = async () => {
+    setDropdownOpen(false)
+
     if (!confirm(`Are you sure you want to delete "${prompt.title}"? This action cannot be undone.`)) {
       return
     }
@@ -123,29 +126,50 @@ export function PromptCard({ prompt }: PromptCardProps) {
                 </CardDescription>
               )}
             </div>
-            <DropdownMenu>
+            <DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen}>
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="ghost"
                   size="icon"
                   className="opacity-0 group-hover:opacity-100 smooth-transition hover:bg-muted/50"
                   disabled={isDeleting}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    console.log("[v0] Dropdown trigger clicked")
+                  }}
                 >
                   <MoreHorizontal className="w-4 h-4" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="smooth-transition">
-                <DropdownMenuItem onClick={() => setShowPreview(true)} className="font-extralight">
+              <DropdownMenuContent align="end" className="smooth-transition z-50" onClick={(e) => e.stopPropagation()}>
+                <DropdownMenuItem
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    setDropdownOpen(false)
+                    setShowPreview(true)
+                  }}
+                  className="font-extralight"
+                >
                   <Eye className="w-4 h-4 mr-2" />
                   Preview
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={handleShare} className="font-extralight">
+                <DropdownMenuItem
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    setDropdownOpen(false)
+                    handleShare()
+                  }}
+                  className="font-extralight"
+                >
                   <Share2 className="w-4 h-4 mr-2" />
                   Share
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
-                  onClick={handleDelete}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    handleDelete()
+                  }}
                   className="font-extralight text-destructive focus:text-destructive"
                   disabled={isDeleting}
                 >

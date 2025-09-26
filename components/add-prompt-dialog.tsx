@@ -56,6 +56,7 @@ export function AddPromptDialog({ open, onOpenChange }: AddPromptDialogProps) {
     console.log("[v0] Starting prompt submission...")
 
     if (!title.trim() || !content.trim() || !category) {
+      console.log("[v0] Validation failed - missing required fields")
       toast({
         title: "Missing fields",
         description: "Please fill in all required fields.",
@@ -68,31 +69,28 @@ export function AddPromptDialog({ open, onOpenChange }: AddPromptDialogProps) {
     const supabase = createClient()
 
     try {
-      console.log("[v0] Inserting prompt with data:", {
+      const promptData = {
         title: title.trim(),
         description: description.trim() || null,
         content: content.trim(),
         category,
         tags,
         is_public: isPublic,
-        user_id: null, // Set user_id to null for anonymous users
-      })
+        usage_count: 0,
+        user_id: null, // Allow anonymous prompt creation
+      }
 
-      const { data, error } = await supabase
-        .from("prompts")
-        .insert({
-          title: title.trim(),
-          description: description.trim() || null,
-          content: content.trim(),
-          category,
-          tags,
-          is_public: isPublic,
-          user_id: null, // Allow anonymous prompt creation
-        })
-        .select()
+      console.log("[v0] Inserting prompt with data:", promptData)
+
+      const { data, error } = await supabase.from("prompts").insert(promptData).select()
 
       if (error) {
-        console.log("[v0] Database error:", error)
+        console.log("[v0] Database error details:", {
+          code: error.code,
+          message: error.message,
+          details: error.details,
+          hint: error.hint,
+        })
         throw error
       }
 
@@ -113,13 +111,25 @@ export function AddPromptDialog({ open, onOpenChange }: AddPromptDialogProps) {
       setIsPublic(true)
       onOpenChange(false)
 
-      // Refresh the page to show the new prompt
-      window.location.reload()
-    } catch (error) {
+      setTimeout(() => {
+        window.location.reload()
+      }, 1000)
+    } catch (error: any) {
       console.error("[v0] Error adding prompt:", error)
+
+      let errorMessage = "Failed to save the prompt. Please try again."
+
+      if (error.code === "42501") {
+        errorMessage = "Permission denied. Please check your database permissions."
+      } else if (error.code === "23505") {
+        errorMessage = "A prompt with this title already exists."
+      } else if (error.message?.includes("RLS")) {
+        errorMessage = "Database security policy error. Please contact support."
+      }
+
       toast({
         title: "Error",
-        description: "Failed to save the prompt. Please try again.",
+        description: errorMessage,
         variant: "destructive",
       })
     } finally {
