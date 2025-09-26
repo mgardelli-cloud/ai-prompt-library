@@ -213,6 +213,5 @@ L'app è compatibile con qualsiasi piattaforma che supporta Next.js:
 ---
 
 <div align="center">
-  <p>Realizzato con ❤️ da <a href="https://github.com/tuo-username">Il Tuo Nome</a></p>
-  <p>Se questo progetto ti è stato utile, considera di dargli una ⭐!</p>
+  <p>Realizzato da <a href="https://github.com/mgardelli-cloud">Gardo</a></p>
 </div>
