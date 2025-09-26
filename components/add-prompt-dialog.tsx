@@ -75,9 +75,11 @@ export function AddPromptDialog({ open, onOpenChange }: AddPromptDialogProps) {
         content: content.trim(),
         category,
         tags,
-        is_public: isPublic,
+        is_public: true, // Force public for anonymous users
         usage_count: 0,
-        user_id: null, // Allow anonymous prompt creation
+        user_id: null, // Explicitly null for anonymous
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
       }
 
       console.log("[v0] Inserting prompt with data:", promptData)
@@ -90,8 +92,16 @@ export function AddPromptDialog({ open, onOpenChange }: AddPromptDialogProps) {
           message: error.message,
           details: error.details,
           hint: error.hint,
+          stack: error.stack,
         })
-        throw error
+
+        if (error.code === "42501") {
+          throw new Error("Database permission denied. Please run the latest RLS policy script.")
+        } else if (error.message?.includes("RLS") || error.message?.includes("policy")) {
+          throw new Error("Database security policy error. Please ensure RLS policies allow anonymous access.")
+        } else {
+          throw error
+        }
       }
 
       console.log("[v0] Prompt inserted successfully:", data)
@@ -112,6 +122,7 @@ export function AddPromptDialog({ open, onOpenChange }: AddPromptDialogProps) {
       onOpenChange(false)
 
       setTimeout(() => {
+        console.log("[v0] Reloading page to show new prompt")
         window.location.reload()
       }, 1000)
     } catch (error: any) {
@@ -119,12 +130,12 @@ export function AddPromptDialog({ open, onOpenChange }: AddPromptDialogProps) {
 
       let errorMessage = "Failed to save the prompt. Please try again."
 
-      if (error.code === "42501") {
-        errorMessage = "Permission denied. Please check your database permissions."
+      if (error.message?.includes("permission denied") || error.message?.includes("RLS")) {
+        errorMessage = "Database permission error. Please run the latest SQL script to fix RLS policies."
       } else if (error.code === "23505") {
         errorMessage = "A prompt with this title already exists."
-      } else if (error.message?.includes("RLS")) {
-        errorMessage = "Database security policy error. Please contact support."
+      } else if (error.message) {
+        errorMessage = error.message
       }
 
       toast({

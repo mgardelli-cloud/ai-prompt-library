@@ -131,35 +131,46 @@ export function PromptCard({ prompt }: PromptCardProps) {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="opacity-0 group-hover:opacity-100 smooth-transition hover:bg-muted/50"
+                  className="opacity-0 group-hover:opacity-100 smooth-transition hover:bg-muted/50 relative z-10"
                   disabled={isDeleting}
                   onClick={(e) => {
+                    e.preventDefault()
                     e.stopPropagation()
-                    console.log("[v0] Dropdown trigger clicked")
+                    console.log("[v0] Dropdown trigger clicked, current state:", dropdownOpen)
+                    setDropdownOpen(!dropdownOpen)
                   }}
                 >
                   <MoreHorizontal className="w-4 h-4" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="smooth-transition z-50" onClick={(e) => e.stopPropagation()}>
+              <DropdownMenuContent
+                align="end"
+                className="smooth-transition z-[100] bg-popover border shadow-lg"
+                onCloseAutoFocus={(e) => e.preventDefault()}
+                onClick={(e) => e.stopPropagation()}
+              >
                 <DropdownMenuItem
                   onClick={(e) => {
+                    e.preventDefault()
                     e.stopPropagation()
+                    console.log("[v0] Preview clicked")
                     setDropdownOpen(false)
                     setShowPreview(true)
                   }}
-                  className="font-extralight"
+                  className="font-extralight cursor-pointer"
                 >
                   <Eye className="w-4 h-4 mr-2" />
                   Preview
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={(e) => {
+                    e.preventDefault()
                     e.stopPropagation()
+                    console.log("[v0] Share clicked")
                     setDropdownOpen(false)
                     handleShare()
                   }}
-                  className="font-extralight"
+                  className="font-extralight cursor-pointer"
                 >
                   <Share2 className="w-4 h-4 mr-2" />
                   Share
@@ -167,10 +178,12 @@ export function PromptCard({ prompt }: PromptCardProps) {
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
                   onClick={(e) => {
+                    e.preventDefault()
                     e.stopPropagation()
+                    console.log("[v0] Delete clicked")
                     handleDelete()
                   }}
-                  className="font-extralight text-destructive focus:text-destructive"
+                  className="font-extralight text-destructive focus:text-destructive cursor-pointer"
                   disabled={isDeleting}
                 >
                   <X className="w-4 h-4 mr-2" />
