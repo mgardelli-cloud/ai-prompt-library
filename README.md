@@ -20,7 +20,7 @@ Una libreria moderna e intuitiva per salvare, categorizzare e cercare i tuoi pro
 
 ## 🚀 Demo Live
 
-[Visualizza Demo](https://ai-prompt-library-eight.vercel.app/) *(sostituisci con il tuo URL)*
+[Visualizza Demo](https://ai-prompt-library-eight.vercel.app/)
 
 
 ## 🛠️ Tecnologie Utilizzate
