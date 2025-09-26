@@ -46,7 +46,7 @@ Una libreria moderna e intuitiva per salvare, categorizzare e cercare i tuoi pro
 
 1. **Clona il repository**
    ```bash
-   git clone https://github.com/tuo-username/ai-prompt-library.git
+   git clone https://github.com/mgardelli-cloud/ai-prompt-library.git
    cd ai-prompt-library
 
 
