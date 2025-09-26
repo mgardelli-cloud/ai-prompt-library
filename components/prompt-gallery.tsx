@@ -130,7 +130,7 @@ export function PromptGallery({ prompts }: PromptGalleryProps) {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <SearchFilters
         onFilter={handleFilter}
         onAdvancedFilter={handleAdvancedFilter}
@@ -142,13 +142,16 @@ export function PromptGallery({ prompts }: PromptGalleryProps) {
       />
 
       <div className="flex items-center justify-between">
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-muted-foreground font-extralight">
           {filteredPrompts.length} prompt{filteredPrompts.length !== 1 ? "s" : ""} found
         </p>
         {advancedFilters && (
-          <div className="flex items-center gap-2">
-            <span className="text-xs text-muted-foreground">Advanced filters active</span>
-            <button onClick={() => setAdvancedFilters(null)} className="text-xs text-primary hover:underline">
+          <div className="flex items-center gap-3">
+            <span className="text-xs text-muted-foreground font-extralight">Advanced filters active</span>
+            <button
+              onClick={() => setAdvancedFilters(null)}
+              className="text-xs text-primary hover:underline smooth-transition font-medium"
+            >
               Clear
             </button>
           </div>
@@ -156,15 +159,15 @@ export function PromptGallery({ prompts }: PromptGalleryProps) {
       </div>
 
       {filteredPrompts.length === 0 ? (
-        <div className="text-center py-12">
-          <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
-            <Search className="w-8 h-8 text-muted-foreground" />
+        <div className="text-center py-16">
+          <div className="w-20 h-20 bg-muted/50 rounded-2xl flex items-center justify-center mx-auto mb-6 smooth-transition">
+            <Search className="w-10 h-10 text-muted-foreground/60" />
           </div>
-          <h3 className="text-lg font-medium text-foreground mb-2">No prompts found</h3>
-          <p className="text-muted-foreground">Try adjusting your search or filters</p>
+          <h3 className="text-xl font-medium text-foreground mb-3">No prompts found</h3>
+          <p className="text-muted-foreground font-extralight text-lg">Try adjusting your search or filters</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredPrompts.map((prompt) => (
             <PromptCard key={prompt.id} prompt={prompt} />
           ))}

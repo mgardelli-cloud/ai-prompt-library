@@ -1,99 +1,3 @@
-<<<<<<< HEAD
-# AI Prompt Library
-
-Una libreria moderna per organizzare, salvare e condividere prompt AI con un'interfaccia elegante e funzionalità avanzate di ricerca.
-
-## ✨ Caratteristiche
-
-- 🔍 **Ricerca Avanzata**: Filtra per categoria, tag, contenuto e descrizione
-- 📱 **Design Responsive**: Interfaccia moderna e mobile-friendly
-- 🌙 **Tema Scuro/Chiaro**: Supporto completo per entrambi i temi
-- 📋 **Copia Facile**: Un clic per copiare i prompt negli appunti
-- 🏷️ **Sistema di Tag**: Organizza i prompt con tag personalizzati
-- 📊 **Statistiche d'Uso**: Traccia l'utilizzo dei prompt più popolari
-- 🔒 **Privacy**: Gestione di prompt pubblici e privati
-
-## 🚀 Tecnologie Utilizzate
-
-- **Frontend**: Next.js 14, React 18, TypeScript
-- **Styling**: Tailwind CSS v4, Radix UI
-- **Database**: Supabase
-- **Autenticazione**: Supabase Auth
-- **Deployment**: Vercel
-
-## 🛠️ Installazione
-
-1. **Clona il repository:**
-   ```bash
-   git clone https://github.com/TUO_USERNAME/ai-prompt-library.git
-   cd ai-prompt-library
-   ```
-
-2. **Installa le dipendenze:**
-   ```bash
-   npm install
-   ```
-
-3. **Configura le variabili d'ambiente:**
-   - Copia `env.example` in `.env.local`
-   - Aggiungi le tue credenziali Supabase:
-   ```env
-   NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-   ```
-
-4. **Avvia il server di sviluppo:**
-   ```bash
-   npm run dev
-   ```
-
-5. **Apri [http://localhost:3000](http://localhost:3000) nel browser**
-
-## 📦 Comandi Disponibili
-
-- `npm run dev` - Avvia il server di sviluppo
-- `npm run build` - Crea la build di produzione
-- `npm run start` - Avvia il server di produzione
-- `npm run lint` - Esegue il linting del codice
-
-## 🗄️ Schema Database
-
-Il progetto utilizza Supabase con la seguente tabella principale:
-
-```sql
-CREATE TABLE prompts (
-  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  title TEXT NOT NULL,
-  content TEXT NOT NULL,
-  description TEXT,
-  category TEXT NOT NULL,
-  tags TEXT[] DEFAULT '{}',
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-  usage_count INTEGER DEFAULT 0,
-  is_public BOOLEAN DEFAULT false
-);
-```
-
-## 🤝 Contribuire
-
-1. Fai un fork del progetto
-2. Crea un branch per la tua feature (`git checkout -b feature/AmazingFeature`)
-3. Committa le tue modifiche (`git commit -m 'Add some AmazingFeature'`)
-4. Pusha il branch (`git push origin feature/AmazingFeature`)
-5. Apri una Pull Request
-
-## 📄 Licenza
-
-Questo progetto è sotto licenza MIT. Vedi il file `LICENSE` per i dettagli.
-
-## 🙏 Riconoscimenti
-
-- [Radix UI](https://www.radix-ui.com/) per i componenti UI
-- [Tailwind CSS](https://tailwindcss.com/) per lo styling
-- [Supabase](https://supabase.com/) per il backend
-- [Lucide React](https://lucide.dev/) per le icone
-=======
 # 🤖 AI Prompt Library
 
 Una libreria moderna e intuitiva per salvare, categorizzare e cercare i tuoi prompt AI preferiti. Costruita con Next.js, Supabase e Tailwind CSS.
@@ -114,6 +18,21 @@ Una libreria moderna e intuitiva per salvare, categorizzare e cercare i tuoi pro
 - **⚡ Performance**: Caricamento veloce con Next.js 14 e caching intelligente
 - **🔒 Sicurezza**: Row Level Security con Supabase per proteggere i dati
 
+## 🚀 Demo Live
+
+[Visualizza Demo](https://ai-prompt-library.vercel.app) *(sostituisci con il tuo URL)*
+
+## 📸 Screenshots
+
+### Interfaccia Principale
+![Main Interface](public/placeholder.svg)
+
+### Ricerca Avanzata
+![Advanced Search](public/placeholder.svg)
+
+### Tema Scuro
+![Dark Theme](public/placeholder.svg)
+
 ## 🛠️ Tecnologie Utilizzate
 
 - **Frontend**: Next.js 14, React 19, TypeScript
@@ -133,6 +52,48 @@ Una libreria moderna e intuitiva per salvare, categorizzare e cercare i tuoi pro
 - Account Supabase
 - Account Vercel (per il deploy)
 
+### Setup Locale
+
+1. **Clona il repository**
+   \`\`\`bash
+   git clone https://github.com/tuo-username/ai-prompt-library.git
+   cd ai-prompt-library
+   \`\`\`
+
+2. **Installa le dipendenze**
+   \`\`\`bash
+   npm install
+   # oppure
+   pnpm install
+   \`\`\`
+
+3. **Configura le variabili d'ambiente**
+   
+   Crea un file `.env.local` nella root del progetto:
+   \`\`\`env
+   NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+   SUPABASE_URL=your_supabase_project_url
+   SUPABASE_ANON_KEY=your_supabase_anon_key
+   \`\`\`
+
+4. **Setup del Database**
+   
+   Esegui gli script SQL in Supabase nell'ordine:
+   - `scripts/001_create_prompts_schema.sql`
+   - `scripts/002_seed_sample_prompts.sql`
+   - `scripts/003_create_rpc_function.sql`
+
+5. **Avvia il server di sviluppo**
+   \`\`\`bash
+   npm run dev
+   # oppure
+   pnpm dev
+   \`\`\`
+
+6. **Apri il browser**
+   
+   Vai su [http://localhost:3000](http://localhost:3000)
 
 ## 🗄️ Struttura del Database
 
@@ -153,26 +114,26 @@ Una libreria moderna e intuitiva per salvare, categorizzare e cercare i tuoi pro
 
 ## 🏗️ Struttura del Progetto
 
-````
+\`\`\`
 ai-prompt-library/
-├── app/                   # App Router di Next.js
+├── app/                    # App Router di Next.js
 │   ├── globals.css        # Stili globali e temi
 │   ├── layout.tsx         # Layout principale
 │   └── page.tsx           # Homepage
 ├── components/            # Componenti React
-│   ├── ui/                # Componenti UI di shadcn
-│   ├── header.tsx         # Header dell'app
+│   ├── ui/               # Componenti UI di shadcn
+│   ├── header.tsx        # Header dell'app
 │   ├── prompt-gallery.tsx # Galleria dei prompt
 │   ├── search-filters.tsx # Filtri di ricerca
-│   ├── theme-toggle.tsx   # Toggle tema scuro/chiaro
+│   ├── theme-toggle.tsx  # Toggle tema scuro/chiaro
 │   └── ...
-├── lib/                   # Utilities e configurazioni
-│   ├── supabase/          # Client Supabase
-│   ├── utils.ts           # Utility functions
-│   └── copy-utils.ts      # Utilities per copia
-├── scripts/               # Script SQL per il database
-└── public/                # Asset statici
-````
+├── lib/                  # Utilities e configurazioni
+│   ├── supabase/        # Client Supabase
+│   ├── utils.ts         # Utility functions
+│   └── copy-utils.ts    # Utilities per copia
+├── scripts/             # Script SQL per il database
+└── public/              # Asset statici
+\`\`\`
 
 ## 🎨 Personalizzazione
 
@@ -180,7 +141,7 @@ ai-prompt-library/
 
 L'app supporta temi personalizzabili tramite CSS custom properties in `app/globals.css`:
 
-````css
+\`\`\`css
 :root {
   --background: 0 0% 100%;
   --foreground: 240 10% 3.9%;
@@ -194,13 +155,13 @@ L'app supporta temi personalizzabili tramite CSS custom properties in `app/globa
   --primary: 0 0% 98%;
   /* ... altri colori */
 }
-````
+\`\`\`
 
 ### Categorie
 
 Modifica le categorie disponibili in `components/search-filters.tsx`:
 
-```` typescript
+\`\`\`typescript
 const categories = [
   "Writing",
   "Coding", 
@@ -209,18 +170,18 @@ const categories = [
   "Business",
   // Aggiungi le tue categorie
 ];
-````
+\`\`\`
 
 ## 🚀 Deploy
 
 ### Deploy su Vercel
 
 1. **Push su GitHub**
-  ```` bash
+   \`\`\`bash
    git add .
    git commit -m "Ready for deploy"
    git push origin main
-````
+   \`\`\`
 
 2. **Connetti a Vercel**
    - Vai su [vercel.com](https://vercel.com)
@@ -240,8 +201,34 @@ L'app è compatibile con qualsiasi piattaforma che supporta Next.js:
 - DigitalOcean App Platform
 - AWS Amplify
 
+## 🤝 Contribuire
 
-## 📋 Future Roadmap
+I contributi sono benvenuti! Per contribuire:
+
+1. **Fork** il progetto
+2. **Crea** un branch per la tua feature (`git checkout -b feature/AmazingFeature`)
+3. **Commit** le tue modifiche (`git commit -m 'Add some AmazingFeature'`)
+4. **Push** al branch (`git push origin feature/AmazingFeature`)
+5. **Apri** una Pull Request
+
+### Linee Guida per i Contributi
+
+- Segui le convenzioni di codice esistenti
+- Aggiungi test per le nuove funzionalità
+- Aggiorna la documentazione se necessario
+- Assicurati che il build passi
+
+## 🐛 Segnalazione Bug
+
+Hai trovato un bug? [Apri una issue](https://github.com/tuo-username/ai-prompt-library/issues) con:
+
+- Descrizione dettagliata del problema
+- Passi per riprodurre il bug
+- Comportamento atteso vs comportamento attuale
+- Screenshots se applicabili
+- Informazioni sul browser/sistema operativo
+
+## 📋 Roadmap
 
 - [ ] Autenticazione utenti multipli
 - [ ] Condivisione prompt pubblici/privati
@@ -252,7 +239,11 @@ L'app è compatibile con qualsiasi piattaforma che supporta Next.js:
 - [ ] Plugin per editor di codice
 - [ ] App mobile (React Native)
 
-## Ringraziamenti
+## 📄 Licenza
+
+Questo progetto è rilasciato sotto la licenza MIT. Vedi il file [LICENSE](LICENSE) per i dettagli.
+
+## 🙏 Ringraziamenti
 
 - [Next.js](https://nextjs.org/) per il framework
 - [Supabase](https://supabase.com/) per il backend
@@ -261,10 +252,15 @@ L'app è compatibile con qualsiasi piattaforma che supporta Next.js:
 - [Lucide](https://lucide.dev/) per le icone
 - [Vercel](https://vercel.com/) per l'hosting
 
+## 📞 Supporto
+
+- 📧 Email: [tuo-email@example.com](mailto:tuo-email@example.com)
+- 🐦 Twitter: [@tuo-twitter](https://twitter.com/tuo-twitter)
+- 💬 Discord: [Server Discord](https://discord.gg/tuo-server)
 
 ---
 
 <div align="center">
-  <p>Realizzato da <a href="https://github.com/mgardelli-cloud">Gardo</a></p>
+  <p>Realizzato con ❤️ da <a href="https://github.com/tuo-username">Il Tuo Nome</a></p>
+  <p>Se questo progetto ti è stato utile, considera di dargli una ⭐!</p>
 </div>
->>>>>>> 153143d7f5843aeb88ad92fabfb4765926ed0ef0

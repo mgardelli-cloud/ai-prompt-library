@@ -67,26 +67,28 @@ export function SearchFilters({
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       <div className="flex flex-col sm:flex-row gap-4">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+          <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
           <Input
             placeholder="Search prompts..."
             value={localQuery}
             onChange={(e) => handleSearch(e.target.value)}
-            className="pl-10"
+            className="pl-12 h-12 smooth-transition font-extralight text-base bg-card/50 backdrop-blur-sm border-border/50"
           />
         </div>
 
         <Select value={selectedCategory} onValueChange={handleCategoryChange}>
-          <SelectTrigger className="w-full sm:w-48">
+          <SelectTrigger className="w-full sm:w-48 h-12 smooth-transition font-extralight bg-card/50 backdrop-blur-sm border-border/50">
             <SelectValue placeholder="All categories" />
           </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All categories</SelectItem>
+          <SelectContent className="smooth-transition">
+            <SelectItem value="all" className="font-extralight">
+              All categories
+            </SelectItem>
             {categories.map((category) => (
-              <SelectItem key={category} value={category}>
+              <SelectItem key={category} value={category} className="font-extralight">
                 {category.replace("-", " ")}
               </SelectItem>
             ))}
@@ -96,7 +98,11 @@ export function SearchFilters({
         <AdvancedSearch onSearch={handleAdvancedSearch} categories={categories} tags={tags} />
 
         {(localQuery || selectedCategory !== "all" || selectedTags.length > 0) && (
-          <Button variant="outline" onClick={clearFilters}>
+          <Button
+            variant="outline"
+            onClick={clearFilters}
+            className="h-12 smooth-transition font-normal bg-transparent"
+          >
             <X className="w-4 h-4 mr-2" />
             Clear
           </Button>
@@ -104,14 +110,14 @@ export function SearchFilters({
       </div>
 
       {tags.length > 0 && (
-        <div className="space-y-2">
+        <div className="space-y-3">
           <p className="text-sm font-medium text-foreground">Filter by tags:</p>
           <div className="flex flex-wrap gap-2">
             {tags.map((tag) => (
               <Badge
                 key={tag}
                 variant={selectedTags.includes(tag) ? "default" : "outline"}
-                className="cursor-pointer hover:bg-primary/80 transition-colors"
+                className="cursor-pointer hover:bg-primary/80 smooth-transition font-extralight px-3 py-1"
                 onClick={() => handleTagToggle(tag)}
               >
                 {tag}

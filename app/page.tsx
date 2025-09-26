@@ -10,8 +10,6 @@ export default async function HomePage() {
 
   try {
     console.log("[v0] Attempting to fetch prompts from database...")
-    console.log("[v0] Supabase URL:", process.env.NEXT_PUBLIC_SUPABASE_URL)
-    console.log("[v0] Supabase Key exists:", !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY)
 
     // First, let's try to verify the table exists
     const { data: tableCheck, error: tableError } = await supabase
@@ -42,25 +40,27 @@ export default async function HomePage() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background smooth-transition">
       <Header />
-      <main className="container mx-auto px-4 py-8">
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-foreground mb-2 text-balance">AI Prompt Library</h1>
-          <p className="text-lg text-muted-foreground text-pretty">
-            Discover, save, and organize your favorite AI prompts
+      <main className="container mx-auto px-6 py-12">
+        <div className="mb-12 text-center">
+          <h1 className="text-5xl font-semibold text-foreground mb-4 text-balance tracking-tight">AI Prompt Library</h1>
+          <p className="text-xl text-muted-foreground text-pretty font-extralight max-w-2xl mx-auto leading-relaxed">
+            Discover, save, and organize your favorite AI prompts with our minimal and elegant interface
           </p>
         </div>
 
         {error && (
-          <div className="mb-6 p-4 bg-destructive/10 border border-destructive/20 rounded-lg">
-            <h3 className="font-medium text-destructive mb-2">Database Error</h3>
-            <p className="text-sm text-destructive/80">
-              {(error as any)?.message || "Failed to load prompts. Please check the database connection."}
+          <div className="mb-8 p-6 bg-destructive/5 border border-destructive/10 rounded-2xl smooth-transition minimal-shadow">
+            <h3 className="font-medium text-destructive mb-3">Database Error</h3>
+            <p className="text-sm text-destructive/80 font-extralight leading-relaxed">
+              {error.message || "Failed to load prompts. Please check the database connection."}
             </p>
-            <details className="mt-2">
-              <summary className="text-xs text-destructive/60 cursor-pointer">Technical Details</summary>
-              <pre className="text-xs mt-1 text-destructive/60 overflow-auto">{JSON.stringify(error, null, 2)}</pre>
+            <details className="mt-4">
+              <summary className="text-xs text-destructive/60 cursor-pointer font-medium">Technical Details</summary>
+              <pre className="text-xs mt-2 text-destructive/60 overflow-auto font-extralight">
+                {JSON.stringify(error, null, 2)}
+              </pre>
             </details>
           </div>
         )}

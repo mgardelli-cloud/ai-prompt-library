@@ -10,20 +10,24 @@ export function Header() {
   const [showAddDialog, setShowAddDialog] = useState(false)
 
   return (
-    <header className="border-b border-border bg-card">
-      <div className="container mx-auto px-4 py-4">
+    <header className="border-b border-border bg-card/50 backdrop-blur-sm smooth-transition">
+      <div className="container mx-auto px-6 py-6">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <Search className="w-4 h-4 text-primary-foreground" />
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center smooth-transition hover:bg-primary/20">
+              <Search className="w-5 h-5 text-primary" />
             </div>
-            <span className="font-semibold text-lg text-foreground">AI Prompt Library</span>
+            <span className="font-semibold text-xl text-foreground tracking-tight">AI Prompt Library</span>
           </div>
 
-          <div className="flex items-center gap-3">
-            <Button onClick={() => setShowAddDialog(true)} className="flex items-center gap-2">
+          <div className="flex items-center gap-4">
+            <Button
+              onClick={() => setShowAddDialog(true)}
+              className="flex items-center gap-2 hover-lift smooth-transition font-medium"
+              size="lg"
+            >
               <Plus className="w-4 h-4" />
-              Add Prompt
+              <span className="font-normal">Add Prompt</span>
             </Button>
             <ThemeToggle />
           </div>

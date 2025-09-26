@@ -36,7 +36,7 @@ export function AddPromptDialog({ open, onOpenChange }: AddPromptDialogProps) {
   const [category, setCategory] = useState("")
   const [tags, setTags] = useState<string[]>([])
   const [tagInput, setTagInput] = useState("")
-  const [isPublic, setIsPublic] = useState(false)
+  const [isPublic, setIsPublic] = useState(true)
   const [isLoading, setIsLoading] = useState(false)
   const { toast } = useToast()
 
@@ -53,6 +53,8 @@ export function AddPromptDialog({ open, onOpenChange }: AddPromptDialogProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    console.log("[v0] Starting prompt submission...")
+
     if (!title.trim() || !content.trim() || !category) {
       toast({
         title: "Missing fields",
@@ -66,30 +68,35 @@ export function AddPromptDialog({ open, onOpenChange }: AddPromptDialogProps) {
     const supabase = createClient()
 
     try {
-      console.log("[DEBUG] Inserting prompt:", {
+      console.log("[v0] Inserting prompt with data:", {
         title: title.trim(),
         description: description.trim() || null,
         content: content.trim(),
         category,
         tags,
         is_public: isPublic,
+        user_id: null, // Set user_id to null for anonymous users
       })
 
-      const { data, error } = await supabase.from("prompts").insert({
-        title: title.trim(),
-        description: description.trim() || null,
-        content: content.trim(),
-        category,
-        tags,
-        is_public: isPublic,
-      })
-
-      console.log("[DEBUG] Supabase response:", { data, error })
+      const { data, error } = await supabase
+        .from("prompts")
+        .insert({
+          title: title.trim(),
+          description: description.trim() || null,
+          content: content.trim(),
+          category,
+          tags,
+          is_public: isPublic,
+          user_id: null, // Allow anonymous prompt creation
+        })
+        .select()
 
       if (error) {
-        console.error("[DEBUG] Supabase error details:", error)
+        console.log("[v0] Database error:", error)
         throw error
       }
+
+      console.log("[v0] Prompt inserted successfully:", data)
 
       toast({
         title: "Prompt added",
@@ -103,13 +110,13 @@ export function AddPromptDialog({ open, onOpenChange }: AddPromptDialogProps) {
       setCategory("")
       setTags([])
       setTagInput("")
-      setIsPublic(false)
+      setIsPublic(true)
       onOpenChange(false)
 
       // Refresh the page to show the new prompt
       window.location.reload()
     } catch (error) {
-      console.error("Error adding prompt:", error)
+      console.error("[v0] Error adding prompt:", error)
       toast({
         title: "Error",
         description: "Failed to save the prompt. Please try again.",
@@ -122,43 +129,53 @@ export function AddPromptDialog({ open, onOpenChange }: AddPromptDialogProps) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle>Add New Prompt</DialogTitle>
-          <DialogDescription>Create a new AI prompt to add to your library</DialogDescription>
+      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto smooth-transition minimal-shadow">
+        <DialogHeader className="space-y-3">
+          <DialogTitle className="text-2xl font-semibold">Add New Prompt</DialogTitle>
+          <DialogDescription className="text-base font-extralight">
+            Create a new AI prompt to add to your library
+          </DialogDescription>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="title">Title *</Label>
+        <form onSubmit={handleSubmit} className="space-y-6 mt-6">
+          <div className="space-y-3">
+            <Label htmlFor="title" className="text-sm font-medium">
+              Title *
+            </Label>
             <Input
               id="title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Enter prompt title"
               required
+              className="smooth-transition font-extralight"
             />
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="description">Description</Label>
+          <div className="space-y-3">
+            <Label htmlFor="description" className="text-sm font-medium">
+              Description
+            </Label>
             <Input
               id="description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Brief description of what this prompt does"
+              className="smooth-transition font-extralight"
             />
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="category">Category *</Label>
+          <div className="space-y-3">
+            <Label htmlFor="category" className="text-sm font-medium">
+              Category *
+            </Label>
             <Select value={category} onValueChange={setCategory} required>
-              <SelectTrigger>
+              <SelectTrigger className="smooth-transition font-extralight">
                 <SelectValue placeholder="Select a category" />
               </SelectTrigger>
               <SelectContent>
                 {categories.map((cat) => (
-                  <SelectItem key={cat} value={cat}>
+                  <SelectItem key={cat} value={cat} className="font-extralight">
                     {cat.replace("-", " ")}
                   </SelectItem>
                 ))}
@@ -166,8 +183,10 @@ export function AddPromptDialog({ open, onOpenChange }: AddPromptDialogProps) {
             </Select>
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="content">Prompt Content *</Label>
+          <div className="space-y-3">
+            <Label htmlFor="content" className="text-sm font-medium">
+              Prompt Content *
+            </Label>
             <Textarea
               id="content"
               value={content}
@@ -175,11 +194,14 @@ export function AddPromptDialog({ open, onOpenChange }: AddPromptDialogProps) {
               placeholder="Enter your AI prompt here..."
               rows={6}
               required
+              className="smooth-transition font-extralight resize-none"
             />
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="tags">Tags</Label>
+          <div className="space-y-3">
+            <Label htmlFor="tags" className="text-sm font-medium">
+              Tags
+            </Label>
             <div className="flex gap-2">
               <Input
                 id="tags"
@@ -187,15 +209,25 @@ export function AddPromptDialog({ open, onOpenChange }: AddPromptDialogProps) {
                 onChange={(e) => setTagInput(e.target.value)}
                 placeholder="Add a tag"
                 onKeyPress={(e) => e.key === "Enter" && (e.preventDefault(), handleAddTag())}
+                className="smooth-transition font-extralight"
               />
-              <Button type="button" onClick={handleAddTag} variant="outline">
+              <Button
+                type="button"
+                onClick={handleAddTag}
+                variant="outline"
+                className="smooth-transition bg-transparent"
+              >
                 Add
               </Button>
             </div>
             {tags.length > 0 && (
-              <div className="flex flex-wrap gap-1 mt-2">
+              <div className="flex flex-wrap gap-2 mt-3">
                 {tags.map((tag) => (
-                  <Badge key={tag} variant="secondary" className="flex items-center gap-1">
+                  <Badge
+                    key={tag}
+                    variant="secondary"
+                    className="flex items-center gap-1 smooth-transition hover-lift font-extralight"
+                  >
                     {tag}
                     <X className="w-3 h-3 cursor-pointer" onClick={() => handleRemoveTag(tag)} />
                   </Badge>
@@ -204,11 +236,16 @@ export function AddPromptDialog({ open, onOpenChange }: AddPromptDialogProps) {
             )}
           </div>
 
-          <div className="flex justify-end gap-2 pt-4">
-            <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
+          <div className="flex justify-end gap-3 pt-6 border-t border-border">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => onOpenChange(false)}
+              className="smooth-transition font-normal"
+            >
               Cancel
             </Button>
-            <Button type="submit" disabled={isLoading}>
+            <Button type="submit" disabled={isLoading} className="smooth-transition font-normal min-w-[120px]">
               {isLoading ? "Adding..." : "Add Prompt"}
             </Button>
           </div>
