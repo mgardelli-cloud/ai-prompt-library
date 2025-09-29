@@ -2,6 +2,8 @@ import { createClient } from "@/lib/supabase/server"
 import { PromptGallery } from "@/components/prompt-gallery"
 import { Header } from "@/components/header"
 import { DropdownTest } from "@/components/dropdown-test"
+import { RadixNativeTest } from "@/components/radix-native-test"
+import { HtmlNativeTest } from "@/components/html-native-test"
 
 export default async function HomePage() {
   const supabase = await createClient()
@@ -55,6 +57,16 @@ export default async function HomePage() {
             </details>
           </div>
         )}
+
+        {/* 🟢 CRITICAL: HTML Native Test */}
+        <div className="mb-8">
+          <HtmlNativeTest />
+        </div>
+
+        {/* 🔴 CRITICAL: Native Radix Test */}
+        <div className="mb-8">
+          <RadixNativeTest />
+        </div>
 
         {/* Temporary dropdown test component */}
         <div className="mb-8">
