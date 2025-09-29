@@ -133,7 +133,7 @@ export function PromptCard({ prompt }: PromptCardProps) {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="opacity-0 group-hover:opacity-100 smooth-transition hover:bg-muted/50 shrink-0"
+                  className="opacity-60 group-hover:opacity-100 smooth-transition hover:bg-muted/50 shrink-0 hover:opacity-100"
                   disabled={isDeleting}
                   aria-label="More options"
                 >
