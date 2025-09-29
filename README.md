@@ -32,18 +32,18 @@
 
 ## 🚀 Demo Live
 
-[Visualizza Demo Ultra-Moderna](https://ai-prompt-library-eight.vercel.app/)
+[Visualizza Demo](https://ai-prompt-library-eight.vercel.app/)
 
 ## 🏗️ Stack Tecnologico
 
-### **Frontend (Ultra-Moderno)**
+### **Frontend**
 - **Next.js 14** - App Router con Server Components
 - **React 18** - Ultime funzionalità con Concurrent Mode
 - **TypeScript** - Strict mode per codice a prova di errore
 - **Framer Motion** - Animazioni production-ready
 - **Tailwind CSS** - Utility classes ultra-moderne
 
-### **UI/UX (Premium)**
+### **UI/UX**
 - **Radix UI** - Primitive componenti accessibili
 - **Design System Custom** - Estetica ultra-minimale
 - **Glass Morphism** - Effetti visivi premium
