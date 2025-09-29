@@ -74,28 +74,28 @@ export function PromptCard({ prompt }: PromptCardProps) {
       }
 
       setIsDeleting(true)
-      const supabase = createClient()
 
       console.log("[v0] Deleting prompt with ID:", prompt.id)
-      console.log("[v0] Prompt object:", prompt)
+      console.log("[v0] Using API route for delete...")
 
-      // Try multiple approaches to ensure deletion
-      const { data, error, count } = await supabase
-        .from("prompts")
-        .delete({ count: 'exact' })
-        .eq("id", prompt.id)
+      // Use API route which has server-side privileges
+      const response = await fetch(`/api/prompts/${prompt.id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
 
-      console.log("[v0] Delete result:", { data, error, count })
+      const result = await response.json()
 
-      if (error) {
-        console.error("[v0] Error deleting prompt:", error)
-        alert(`Failed to delete prompt: ${error.message}. Please check your permissions.`)
-      } else if (count === 0) {
-        console.warn("[v0] No rows were deleted - prompt may not exist or no permissions")
-        alert("No prompt was deleted. It may have already been removed or you don't have permission.")
+      console.log("[v0] API Delete result:", result)
+
+      if (!response.ok) {
+        console.error("[v0] API Error:", result.error)
+        alert(`Failed to delete prompt: ${result.error}`)
       } else {
-        console.log(`[v0] Successfully deleted ${count} prompt(s)`)
-        alert("Prompt deleted successfully!")
+        console.log("[v0] Successfully deleted via API")
+        alert(result.message || "Prompt deleted successfully!")
         // Force a hard reload to ensure fresh data
         window.location.href = window.location.href
       }
