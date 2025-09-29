@@ -298,7 +298,5 @@ Questa non è solo un'altra libreria di prompt. È una **vetrina di eccellenza n
 ---
 
 <div align="center">
-  <p><strong>Costruito con ❤️ e tecnologie all'avanguardia per la community AI</strong></p>
-  <p><em>Vivi il futuro delle applicazioni web oggi! 🚀✨</em></p>
   <p>Realizzato da <a href="https://github.com/mgardelli-cloud">Gardo</a></p>
 </div>
