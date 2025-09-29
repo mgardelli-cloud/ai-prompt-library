@@ -35,7 +35,6 @@ interface PromptCardProps {
 export function PromptCard({ prompt }: PromptCardProps) {
   const [showPreview, setShowPreview] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
-  const [dropdownOpen, setDropdownOpen] = useState(false)
 
   const handleCopyUsage = async () => {
     const supabase = createClient()
@@ -68,8 +67,6 @@ export function PromptCard({ prompt }: PromptCardProps) {
   }
 
   const handleDelete = async () => {
-    setDropdownOpen(false)
-
     if (!confirm(`Are you sure you want to delete "${prompt.title}"? This action cannot be undone.`)) {
       return
     }
@@ -126,35 +123,26 @@ export function PromptCard({ prompt }: PromptCardProps) {
                 </CardDescription>
               )}
             </div>
-            <DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen}>
+            <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="opacity-0 group-hover:opacity-100 smooth-transition hover:bg-muted/50 relative z-10"
+                  className="opacity-0 group-hover:opacity-100 smooth-transition hover:bg-muted/50 shrink-0"
                   disabled={isDeleting}
                   onClick={(e) => {
-                    e.preventDefault()
+                    console.log("[v0] Dropdown trigger clicked")
                     e.stopPropagation()
-                    console.log("[v0] Dropdown trigger clicked, current state:", dropdownOpen)
-                    setDropdownOpen(!dropdownOpen)
                   }}
                 >
                   <MoreHorizontal className="w-4 h-4" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent
-                align="end"
-                className="smooth-transition z-[100] bg-popover border shadow-lg"
-                onCloseAutoFocus={(e) => e.preventDefault()}
-                onClick={(e) => e.stopPropagation()}
-              >
+              <DropdownMenuContent align="end" className="w-48" sideOffset={8}>
                 <DropdownMenuItem
                   onClick={(e) => {
-                    e.preventDefault()
                     e.stopPropagation()
                     console.log("[v0] Preview clicked")
-                    setDropdownOpen(false)
                     setShowPreview(true)
                   }}
                   className="font-extralight cursor-pointer"
@@ -164,10 +152,8 @@ export function PromptCard({ prompt }: PromptCardProps) {
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={(e) => {
-                    e.preventDefault()
                     e.stopPropagation()
                     console.log("[v0] Share clicked")
-                    setDropdownOpen(false)
                     handleShare()
                   }}
                   className="font-extralight cursor-pointer"
@@ -178,7 +164,6 @@ export function PromptCard({ prompt }: PromptCardProps) {
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
                   onClick={(e) => {
-                    e.preventDefault()
                     e.stopPropagation()
                     console.log("[v0] Delete clicked")
                     handleDelete()
