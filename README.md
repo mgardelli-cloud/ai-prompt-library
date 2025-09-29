@@ -20,18 +20,8 @@ Una libreria moderna e intuitiva per salvare, categorizzare e cercare i tuoi pro
 
 ## 🚀 Demo Live
 
-[Visualizza Demo](https://ai-prompt-library.vercel.app) *(sostituisci con il tuo URL)*
+[Visualizza Demo](https://ai-prompt-library-eight.vercel.app/)
 
-## 📸 Screenshots
-
-### Interfaccia Principale
-![Main Interface](public/placeholder.svg)
-
-### Ricerca Avanzata
-![Advanced Search](public/placeholder.svg)
-
-### Tema Scuro
-![Dark Theme](public/placeholder.svg)
 
 ## 🛠️ Tecnologie Utilizzate
 
@@ -55,27 +45,25 @@ Una libreria moderna e intuitiva per salvare, categorizzare e cercare i tuoi pro
 ### Setup Locale
 
 1. **Clona il repository**
-   \`\`\`bash
-   git clone https://github.com/tuo-username/ai-prompt-library.git
+   ```bash
+   git clone https://github.com/mgardelli-cloud/ai-prompt-library.git
    cd ai-prompt-library
-   \`\`\`
+
 
 2. **Installa le dipendenze**
-   \`\`\`bash
+   ``` bash
    npm install
    # oppure
    pnpm install
-   \`\`\`
 
 3. **Configura le variabili d'ambiente**
    
    Crea un file `.env.local` nella root del progetto:
-   \`\`\`env
+   ```env
    NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
    NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
    SUPABASE_URL=your_supabase_project_url
    SUPABASE_ANON_KEY=your_supabase_anon_key
-   \`\`\`
 
 4. **Setup del Database**
    
@@ -85,11 +73,11 @@ Una libreria moderna e intuitiva per salvare, categorizzare e cercare i tuoi pro
    - `scripts/003_create_rpc_function.sql`
 
 5. **Avvia il server di sviluppo**
-   \`\`\`bash
+  ``` bash
    npm run dev
    # oppure
    pnpm dev
-   \`\`\`
+   ```
 
 6. **Apri il browser**
    
@@ -114,7 +102,7 @@ Una libreria moderna e intuitiva per salvare, categorizzare e cercare i tuoi pro
 
 ## 🏗️ Struttura del Progetto
 
-\`\`\`
+```
 ai-prompt-library/
 ├── app/                    # App Router di Next.js
 │   ├── globals.css        # Stili globali e temi
@@ -133,7 +121,7 @@ ai-prompt-library/
 │   └── copy-utils.ts    # Utilities per copia
 ├── scripts/             # Script SQL per il database
 └── public/              # Asset statici
-\`\`\`
+```
 
 ## 🎨 Personalizzazione
 
@@ -141,7 +129,7 @@ ai-prompt-library/
 
 L'app supporta temi personalizzabili tramite CSS custom properties in `app/globals.css`:
 
-\`\`\`css
+``` css
 :root {
   --background: 0 0% 100%;
   --foreground: 240 10% 3.9%;
@@ -155,13 +143,13 @@ L'app supporta temi personalizzabili tramite CSS custom properties in `app/globa
   --primary: 0 0% 98%;
   /* ... altri colori */
 }
-\`\`\`
+```
 
 ### Categorie
 
 Modifica le categorie disponibili in `components/search-filters.tsx`:
 
-\`\`\`typescript
+```typescript
 const categories = [
   "Writing",
   "Coding", 
@@ -170,18 +158,18 @@ const categories = [
   "Business",
   // Aggiungi le tue categorie
 ];
-\`\`\`
+```
 
 ## 🚀 Deploy
 
 ### Deploy su Vercel
 
 1. **Push su GitHub**
-   \`\`\`bash
+   ``` bash
    git add .
    git commit -m "Ready for deploy"
    git push origin main
-   \`\`\`
+  
 
 2. **Connetti a Vercel**
    - Vai su [vercel.com](https://vercel.com)
@@ -201,33 +189,6 @@ L'app è compatibile con qualsiasi piattaforma che supporta Next.js:
 - DigitalOcean App Platform
 - AWS Amplify
 
-## 🤝 Contribuire
-
-I contributi sono benvenuti! Per contribuire:
-
-1. **Fork** il progetto
-2. **Crea** un branch per la tua feature (`git checkout -b feature/AmazingFeature`)
-3. **Commit** le tue modifiche (`git commit -m 'Add some AmazingFeature'`)
-4. **Push** al branch (`git push origin feature/AmazingFeature`)
-5. **Apri** una Pull Request
-
-### Linee Guida per i Contributi
-
-- Segui le convenzioni di codice esistenti
-- Aggiungi test per le nuove funzionalità
-- Aggiorna la documentazione se necessario
-- Assicurati che il build passi
-
-## 🐛 Segnalazione Bug
-
-Hai trovato un bug? [Apri una issue](https://github.com/tuo-username/ai-prompt-library/issues) con:
-
-- Descrizione dettagliata del problema
-- Passi per riprodurre il bug
-- Comportamento atteso vs comportamento attuale
-- Screenshots se applicabili
-- Informazioni sul browser/sistema operativo
-
 ## 📋 Roadmap
 
 - [ ] Autenticazione utenti multipli
@@ -239,11 +200,8 @@ Hai trovato un bug? [Apri una issue](https://github.com/tuo-username/ai-prompt-l
 - [ ] Plugin per editor di codice
 - [ ] App mobile (React Native)
 
-## 📄 Licenza
 
-Questo progetto è rilasciato sotto la licenza MIT. Vedi il file [LICENSE](LICENSE) per i dettagli.
-
-## 🙏 Ringraziamenti
+## Ringraziamenti
 
 - [Next.js](https://nextjs.org/) per il framework
 - [Supabase](https://supabase.com/) per il backend
@@ -252,15 +210,8 @@ Questo progetto è rilasciato sotto la licenza MIT. Vedi il file [LICENSE](LICEN
 - [Lucide](https://lucide.dev/) per le icone
 - [Vercel](https://vercel.com/) per l'hosting
 
-## 📞 Supporto
-
-- 📧 Email: [tuo-email@example.com](mailto:tuo-email@example.com)
-- 🐦 Twitter: [@tuo-twitter](https://twitter.com/tuo-twitter)
-- 💬 Discord: [Server Discord](https://discord.gg/tuo-server)
-
 ---
 
 <div align="center">
-  <p>Realizzato con ❤️ da <a href="https://github.com/tuo-username">Il Tuo Nome</a></p>
-  <p>Se questo progetto ti è stato utile, considera di dargli una ⭐!</p>
+  <p>Realizzato da <a href="https://github.com/mgardelli-cloud">Gardo</a></p>
 </div>
