@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useCallback } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -35,6 +35,7 @@ interface PromptCardProps {
 export function PromptCard({ prompt }: PromptCardProps) {
   const [showPreview, setShowPreview] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const handleCopyUsage = async () => {
     const supabase = createClient()
@@ -48,33 +49,37 @@ export function PromptCard({ prompt }: PromptCardProps) {
     }
   }
 
-  const handleShare = async () => {
-    if (navigator.share) {
-      try {
+  const handleShare = useCallback(async () => {
+    try {
+      if (navigator.share) {
         await navigator.share({
           title: prompt.title,
           text: prompt.description || prompt.title,
           url: window.location.href,
         })
-      } catch (error) {
-        // User cancelled sharing
+      } else {
+        // Fallback: copy URL to clipboard
+        const url = `${window.location.origin}?prompt=${prompt.id}`
+        await navigator.clipboard.writeText(url)
       }
-    } else {
-      // Fallback: copy URL to clipboard
-      const url = `${window.location.origin}?prompt=${prompt.id}`
-      await navigator.clipboard.writeText(url)
+    } catch (error) {
+      console.error("Error sharing prompt:", error)
+      // User cancelled sharing or other error
+    } finally {
+      setIsMenuOpen(false)
     }
-  }
+  }, [prompt.id, prompt.title, prompt.description])
 
-  const handleDelete = async () => {
-    if (!confirm(`Are you sure you want to delete "${prompt.title}"? This action cannot be undone.`)) {
-      return
-    }
-
-    setIsDeleting(true)
-    const supabase = createClient()
-
+  const handleDelete = useCallback(async () => {
     try {
+      if (!confirm(`Are you sure you want to delete "${prompt.title}"? This action cannot be undone.`)) {
+        return
+      }
+
+      setIsDeleting(true)
+      setIsMenuOpen(false)
+      const supabase = createClient()
+
       console.log("[v0] Deleting prompt with ID:", prompt.id)
 
       const { error } = await supabase.from("prompts").delete().eq("id", prompt.id)
@@ -93,7 +98,7 @@ export function PromptCard({ prompt }: PromptCardProps) {
     } finally {
       setIsDeleting(false)
     }
-  }
+  }, [prompt.id, prompt.title])
 
   const getCategoryColor = (category: string) => {
     const colors: Record<string, string> = {
@@ -123,27 +128,25 @@ export function PromptCard({ prompt }: PromptCardProps) {
                 </CardDescription>
               )}
             </div>
-            <DropdownMenu>
+            <DropdownMenu open={isMenuOpen} onOpenChange={setIsMenuOpen}>
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="ghost"
                   size="icon"
                   className="opacity-0 group-hover:opacity-100 smooth-transition hover:bg-muted/50 shrink-0"
                   disabled={isDeleting}
-                  onClick={(e) => {
-                    console.log("[v0] Dropdown trigger clicked")
-                    e.stopPropagation()
-                  }}
+                  aria-label="More options"
                 >
                   <MoreHorizontal className="w-4 h-4" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-48" sideOffset={8}>
+              <DropdownMenuContent align="end" className="w-48 z-[9999]" sideOffset={8}>
                 <DropdownMenuItem
                   onClick={(e) => {
-                    e.stopPropagation()
+                    e.preventDefault()
                     console.log("[v0] Preview clicked")
                     setShowPreview(true)
+                    setIsMenuOpen(false)
                   }}
                   className="font-extralight cursor-pointer"
                 >
@@ -152,7 +155,7 @@ export function PromptCard({ prompt }: PromptCardProps) {
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={(e) => {
-                    e.stopPropagation()
+                    e.preventDefault()
                     console.log("[v0] Share clicked")
                     handleShare()
                   }}
@@ -164,7 +167,7 @@ export function PromptCard({ prompt }: PromptCardProps) {
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
                   onClick={(e) => {
-                    e.stopPropagation()
+                    e.preventDefault()
                     console.log("[v0] Delete clicked")
                     handleDelete()
                   }}
