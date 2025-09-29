@@ -117,7 +117,11 @@ export function SearchFilters({
               <Badge
                 key={tag}
                 variant={selectedTags.includes(tag) ? "default" : "outline"}
-                className="cursor-pointer hover:bg-primary/80 smooth-transition font-extralight px-3 py-1"
+                className={`cursor-pointer smooth-transition font-extralight px-3 py-1 ${
+                  selectedTags.includes(tag)
+                    ? "hover:border-primary-foreground/50"
+                    : "hover:border-foreground hover:bg-transparent hover:text-foreground"
+                }`}
                 onClick={() => handleTagToggle(tag)}
               >
                 {tag}

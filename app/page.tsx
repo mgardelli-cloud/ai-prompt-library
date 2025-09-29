@@ -11,18 +11,8 @@ export default async function HomePage() {
   try {
     console.log("[v0] Attempting to fetch prompts from database...")
 
-    // First, let's try to verify the table exists
-    const { data: tableCheck, error: tableError } = await supabase
-      .from("information_schema.tables")
-      .select("table_name")
-      .eq("table_name", "prompts")
-      .eq("table_schema", "public")
-
-    console.log("[v0] Table check result:", { tableCheck, tableError })
-
-    // Now try to fetch prompts with explicit schema reference
+    // Directly fetch prompts - if table doesn't exist, we'll get a clear error
     const { data: promptsData, error: promptsError } = await supabase
-      .schema("public")
       .from("prompts")
       .select("*")
       .order("created_at", { ascending: false })
@@ -46,7 +36,7 @@ export default async function HomePage() {
         <div className="mb-12 text-center">
           <h1 className="text-5xl font-semibold text-foreground mb-4 text-balance tracking-tight">AI Prompt Library</h1>
           <p className="text-xl text-muted-foreground text-pretty font-extralight max-w-2xl mx-auto leading-relaxed">
-            Discover, save, and organize your AI Prompts
+            Discover, save, and organize your favorite AI prompts with our minimal and elegant interface
           </p>
         </div>
 
