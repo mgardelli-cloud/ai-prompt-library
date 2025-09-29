@@ -110,7 +110,7 @@ scripts/009_add_increment_function.sql
 ### Sviluppo
 
 ```bash
-# Avvia server di sviluppo ultra-moderno
+# Avvia server di sviluppo
 pnpm dev
 
 # Apri http://localhost:3000 e goditi la magia ✨
@@ -131,7 +131,7 @@ ai-prompt-library/
 │   ├── page-ultra.tsx              # Homepage cinematografica
 │   ├── globals.css                 # Stili base
 │   └── api/                        # Route API ottimizzate
-├── 🎨 styles/                      # Design system ultra-moderno
+├── 🎨 styles/                      # Design system
 │   ├── globals.css                 # Stili base e temi
 │   └── ultra-modern.css            # Effetti premium & animazioni
 ├── 🔧 lib/                         # Utilities e configurazioni
@@ -156,7 +156,7 @@ ai-prompt-library/
 - **Barra ricerca fluttuante** con effetti glass
 - **Animazioni grid stagger** per reveal fluidi
 - **Filtri avanzati** con transizioni animate
-- **Stati vuoti** con illustrazioni deliziose
+- **Stati vuoti** con illustrazioni
 - **Skeleton loading** con effetti shimmer
 
 ### **🏠 Homepage Ultra**
