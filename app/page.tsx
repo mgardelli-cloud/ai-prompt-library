@@ -36,7 +36,7 @@ export default async function HomePage() {
         <div className="mb-12 text-center">
           <h1 className="text-5xl font-semibold text-foreground mb-4 text-balance tracking-tight">AI Prompt Library</h1>
           <p className="text-xl text-muted-foreground text-pretty font-extralight max-w-2xl mx-auto leading-relaxed">
-            Discover, save, and organize your favorite AI prompts with our minimal and elegant interface
+            Discover, save, and organize your favorite AI prompts
           </p>
         </div>
 
