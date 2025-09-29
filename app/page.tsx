@@ -58,20 +58,21 @@ export default async function HomePage() {
           </div>
         )}
 
-        {/* 🟢 CRITICAL: HTML Native Test */}
-        <div className="mb-8">
-          <HtmlNativeTest />
-        </div>
-
-        {/* 🔴 CRITICAL: Native Radix Test */}
-        <div className="mb-8">
-          <RadixNativeTest />
-        </div>
-
-        {/* Temporary dropdown test component */}
-        <div className="mb-8">
-          <DropdownTest />
-        </div>
+        {/* 🔴 Keep for debugging if needed */}
+        {process.env.NODE_ENV === 'development' && (
+          <>
+            <div className="mb-4">
+              <details className="bg-yellow-50 p-4 rounded-lg">
+                <summary className="font-medium cursor-pointer">🔧 Debug Components (Dev Only)</summary>
+                <div className="mt-4 space-y-4">
+                  <HtmlNativeTest />
+                  <RadixNativeTest />
+                  <DropdownTest />
+                </div>
+              </details>
+            </div>
+          </>
+        )}
 
         <PromptGallery prompts={prompts} />
       </main>

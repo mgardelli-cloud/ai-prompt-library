@@ -5,14 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Eye, MoreHorizontal, Share2, X } from "lucide-react"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-  DropdownMenuSeparator,
-  DropdownMenuPortal,
-} from "@/components/ui/dropdown-menu"
+import * as DropdownMenu from "@radix-ui/react-dropdown-menu"
 import { PromptPreviewDialog } from "./prompt-preview-dialog"
 import { CopyButton } from "./copy-button"
 import { createClient } from "@/lib/supabase/client"
@@ -125,53 +118,64 @@ export function PromptCard({ prompt }: PromptCardProps) {
                 </CardDescription>
               )}
             </div>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
+            <DropdownMenu.Root>
+              <DropdownMenu.Trigger asChild>
                 <Button
                   variant="ghost"
                   size="icon"
                   className="opacity-60 group-hover:opacity-100 transition-opacity duration-200 hover:bg-muted/50 shrink-0 hover:opacity-100"
                   disabled={isDeleting}
                   aria-label="More options"
+                  onClick={() => console.log("[v0] Native trigger clicked")}
                 >
                   <MoreHorizontal className="w-4 h-4" />
                 </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuPortal>
-                <DropdownMenuContent align="end" className="w-48" sideOffset={8}>
-                  <DropdownMenuItem
+              </DropdownMenu.Trigger>
+              
+              <DropdownMenu.Portal>
+                <DropdownMenu.Content 
+                  align="end" 
+                  className="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-lg p-1 z-[99999] min-w-[12rem]"
+                  sideOffset={8}
+                >
+                  <DropdownMenu.Item 
+                    className="px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer rounded text-sm flex items-center outline-none"
                     onClick={() => {
-                      console.log("[v0] Preview clicked")
+                      console.log("[v0] Native Preview clicked")
                       setShowPreview(true)
                     }}
                   >
                     <Eye className="w-4 h-4 mr-2" />
                     Preview
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
+                  </DropdownMenu.Item>
+                  
+                  <DropdownMenu.Item 
+                    className="px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer rounded text-sm flex items-center outline-none"
                     onClick={() => {
-                      console.log("[v0] Share clicked")
+                      console.log("[v0] Native Share clicked")
                       handleShare()
                     }}
                   >
                     <Share2 className="w-4 h-4 mr-2" />
                     Share
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem
+                  </DropdownMenu.Item>
+                  
+                  <DropdownMenu.Separator className="h-px bg-gray-200 dark:bg-gray-600 my-1" />
+                  
+                  <DropdownMenu.Item 
+                    className="px-3 py-2 hover:bg-red-100 dark:hover:bg-red-900/20 cursor-pointer rounded text-sm flex items-center text-red-600 dark:text-red-400 outline-none"
+                    disabled={isDeleting}
                     onClick={() => {
-                      console.log("[v0] Delete clicked")
+                      console.log("[v0] Native Delete clicked")
                       handleDelete()
                     }}
-                    className="text-destructive focus:text-destructive"
-                    disabled={isDeleting}
                   >
                     <X className="w-4 h-4 mr-2" />
                     {isDeleting ? "Deleting..." : "Delete Prompt"}
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenuPortal>
-            </DropdownMenu>
+                  </DropdownMenu.Item>
+                </DropdownMenu.Content>
+              </DropdownMenu.Portal>
+            </DropdownMenu.Root>
           </div>
 
           <div className="flex items-center gap-3 mt-4">
