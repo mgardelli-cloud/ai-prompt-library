@@ -143,7 +143,7 @@ ai-prompt-library/
 └── 📚 docs/                        # Documentazione completa
 ```
 
-## 🎯 Componenti Ultra-Moderni
+## 🎯 Componenti
 
 ### **💎 PromptCard Ultra**
 - **Effetti hover magnetici** con animazioni scale
