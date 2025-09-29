@@ -1,11 +1,10 @@
 "use client"
 
-import { useState, useCallback } from "react"
+import { useState, useCallback, useEffect } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Eye, MoreHorizontal, Share2, X } from "lucide-react"
-import * as DropdownMenu from "@radix-ui/react-dropdown-menu"
 import { PromptPreviewDialog } from "./prompt-preview-dialog"
 import { CopyButton } from "./copy-button"
 import { createClient } from "@/lib/supabase/client"
@@ -29,6 +28,13 @@ interface PromptCardProps {
 export function PromptCard({ prompt }: PromptCardProps) {
   const [showPreview, setShowPreview] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
+
+  // Ensure client-side only rendering for dropdown
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
   const handleCopyUsage = async () => {
     const supabase = createClient()
@@ -118,64 +124,91 @@ export function PromptCard({ prompt }: PromptCardProps) {
                 </CardDescription>
               )}
             </div>
-            <DropdownMenu.Root>
-              <DropdownMenu.Trigger asChild>
+            {/* Fallback: Simple HTML dropdown if Radix fails */}
+            {isMounted ? (
+              <div className="relative">
                 <Button
                   variant="ghost"
                   size="icon"
                   className="opacity-60 group-hover:opacity-100 transition-opacity duration-200 hover:bg-muted/50 shrink-0 hover:opacity-100"
                   disabled={isDeleting}
                   aria-label="More options"
-                  onClick={() => console.log("[v0] Native trigger clicked")}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    e.stopPropagation()
+                    console.log("[v0] Fallback trigger clicked")
+                    setIsMenuOpen(!isMenuOpen)
+                  }}
                 >
                   <MoreHorizontal className="w-4 h-4" />
                 </Button>
-              </DropdownMenu.Trigger>
-              
-              <DropdownMenu.Portal>
-                <DropdownMenu.Content 
-                  align="end" 
-                  className="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-lg p-1 z-[99999] min-w-[12rem]"
-                  sideOffset={8}
-                >
-                  <DropdownMenu.Item 
-                    className="px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer rounded text-sm flex items-center outline-none"
-                    onClick={() => {
-                      console.log("[v0] Native Preview clicked")
-                      setShowPreview(true)
-                    }}
-                  >
-                    <Eye className="w-4 h-4 mr-2" />
-                    Preview
-                  </DropdownMenu.Item>
-                  
-                  <DropdownMenu.Item 
-                    className="px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer rounded text-sm flex items-center outline-none"
-                    onClick={() => {
-                      console.log("[v0] Native Share clicked")
-                      handleShare()
-                    }}
-                  >
-                    <Share2 className="w-4 h-4 mr-2" />
-                    Share
-                  </DropdownMenu.Item>
-                  
-                  <DropdownMenu.Separator className="h-px bg-gray-200 dark:bg-gray-600 my-1" />
-                  
-                  <DropdownMenu.Item 
-                    className="px-3 py-2 hover:bg-red-100 dark:hover:bg-red-900/20 cursor-pointer rounded text-sm flex items-center text-red-600 dark:text-red-400 outline-none"
-                    disabled={isDeleting}
-                    onClick={() => {
-                      console.log("[v0] Native Delete clicked")
-                      handleDelete()
-                    }}
-                  >
-                    <X className="w-4 h-4 mr-2" />
-                    {isDeleting ? "Deleting..." : "Delete Prompt"}
-                  </DropdownMenu.Item>
-                </DropdownMenu.Content>
-              </DropdownMenu.Portal>
-            </DropdownMenu.Root>
+                
+                {isMenuOpen && (
+                  <>
+                    {/* Backdrop */}
+                    <div 
+                      className="fixed inset-0 z-[9998]" 
+                      onClick={() => setIsMenuOpen(false)}
+                    />
+                    
+                    {/* Menu */}
+                    <div className="absolute right-0 top-full mt-2 w-48 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-lg py-1 z-[9999]">
+                      <button
+                        className="w-full px-3 py-2 text-left hover:bg-gray-100 dark:hover:bg-gray-700 text-sm flex items-center"
+                        onClick={(e) => {
+                          e.preventDefault()
+                          console.log("[v0] Fallback Preview clicked")
+                          setShowPreview(true)
+                          setIsMenuOpen(false)
+                        }}
+                      >
+                        <Eye className="w-4 h-4 mr-2" />
+                        Preview
+                      </button>
+                      
+                      <button
+                        className="w-full px-3 py-2 text-left hover:bg-gray-100 dark:hover:bg-gray-700 text-sm flex items-center"
+                        onClick={(e) => {
+                          e.preventDefault()
+                          console.log("[v0] Fallback Share clicked")
+                          handleShare()
+                          setIsMenuOpen(false)
+                        }}
+                      >
+                        <Share2 className="w-4 h-4 mr-2" />
+                        Share
+                      </button>
+                      
+                      <hr className="my-1 border-gray-200 dark:border-gray-600" />
+                      
+                      <button
+                        className="w-full px-3 py-2 text-left hover:bg-red-100 dark:hover:bg-red-900/20 text-sm flex items-center text-red-600 dark:text-red-400 disabled:opacity-50"
+                        disabled={isDeleting}
+                        onClick={(e) => {
+                          e.preventDefault()
+                          console.log("[v0] Fallback Delete clicked")
+                          handleDelete()
+                          setIsMenuOpen(false)
+                        }}
+                      >
+                        <X className="w-4 h-4 mr-2" />
+                        {isDeleting ? "Deleting..." : "Delete Prompt"}
+                      </button>
+                    </div>
+                  </>
+                )}
+              </div>
+            ) : (
+              // Loading state
+              <Button
+                variant="ghost"
+                size="icon"
+                className="opacity-60 shrink-0"
+                disabled
+              >
+                <MoreHorizontal className="w-4 h-4" />
+              </Button>
+            )}
           </div>
 
           <div className="flex items-center gap-3 mt-4">
