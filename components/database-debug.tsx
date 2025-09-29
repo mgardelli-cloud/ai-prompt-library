@@ -15,6 +15,20 @@ export function DatabaseDebug() {
     try {
       const supabase = createClient()
       
+      // Test API route
+      const apiTestResult = await fetch('/api/prompts/test-connection', {
+        method: 'GET'
+      }).catch(() => null)
+      
+      let apiStatus = "❌ API route not accessible"
+      if (apiTestResult) {
+        if (apiTestResult.ok) {
+          apiStatus = "✅ API route accessible"
+        } else {
+          apiStatus = `❌ API route error: ${apiTestResult.status}`
+        }
+      }
+      
       // Test 1: Authentication status
       const { data: { user }, error: authError } = await supabase.auth.getUser()
       
@@ -91,6 +105,7 @@ export function DatabaseDebug() {
       }
       
       setResult(`
+🌐 API Route: ${apiStatus}
 🔐 Authentication: ${authStatus}
 ✅ Database Connection: OK
 ✅ Total prompts: ${testData?.length || 0}
@@ -101,7 +116,10 @@ ${deleteStatus}
 🔍 Sample prompts:
 ${selectData?.map((p, i) => `${i + 1}. "${p.title}" (ID: ${p.id})`).join('\n') || "No prompts found"}
 
-💡 If delete fails but insert works, check RLS policies in Supabase dashboard.
+💡 Solutions:
+- If API route fails: Check Vercel deployment
+- If delete fails: Add SUPABASE_SERVICE_ROLE_KEY to Vercel environment variables
+- Get service role key from Supabase Dashboard > Settings > API
       `.trim())
       
     } catch (error) {

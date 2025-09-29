@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server"
+import { createClient as createServerClient } from "@supabase/supabase-js"
 import { NextRequest, NextResponse } from "next/server"
 
 export async function DELETE(
@@ -17,8 +17,24 @@ export async function DELETE(
 
     console.log("[API] Deleting prompt with ID:", id)
 
-    // Use server-side client which has admin privileges
-    const supabase = await createClient()
+    // Use service role key for admin privileges (bypasses RLS)
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
+    const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
+    
+    if (!supabaseServiceKey) {
+      console.error("[API] SUPABASE_SERVICE_ROLE_KEY not found in environment")
+      return NextResponse.json(
+        { error: "Server configuration error: Missing service role key" },
+        { status: 500 }
+      )
+    }
+
+    const supabase = createServerClient(supabaseUrl, supabaseServiceKey, {
+      auth: {
+        autoRefreshToken: false,
+        persistSession: false
+      }
+    })
     
     // First check if the prompt exists
     const { data: existingPrompt, error: selectError } = await supabase
