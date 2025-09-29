@@ -11,6 +11,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
   DropdownMenuSeparator,
+  DropdownMenuPortal,
 } from "@/components/ui/dropdown-menu"
 import { PromptPreviewDialog } from "./prompt-preview-dialog"
 import { CopyButton } from "./copy-button"
@@ -136,38 +137,40 @@ export function PromptCard({ prompt }: PromptCardProps) {
                   <MoreHorizontal className="w-4 h-4" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-48" sideOffset={8}>
-                <DropdownMenuItem
-                  onClick={() => {
-                    console.log("[v0] Preview clicked")
-                    setShowPreview(true)
-                  }}
-                >
-                  <Eye className="w-4 h-4 mr-2" />
-                  Preview
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={() => {
-                    console.log("[v0] Share clicked")
-                    handleShare()
-                  }}
-                >
-                  <Share2 className="w-4 h-4 mr-2" />
-                  Share
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  onClick={() => {
-                    console.log("[v0] Delete clicked")
-                    handleDelete()
-                  }}
-                  className="text-destructive focus:text-destructive"
-                  disabled={isDeleting}
-                >
-                  <X className="w-4 h-4 mr-2" />
-                  {isDeleting ? "Deleting..." : "Delete Prompt"}
-                </DropdownMenuItem>
-              </DropdownMenuContent>
+              <DropdownMenuPortal>
+                <DropdownMenuContent align="end" className="w-48" sideOffset={8}>
+                  <DropdownMenuItem
+                    onClick={() => {
+                      console.log("[v0] Preview clicked")
+                      setShowPreview(true)
+                    }}
+                  >
+                    <Eye className="w-4 h-4 mr-2" />
+                    Preview
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => {
+                      console.log("[v0] Share clicked")
+                      handleShare()
+                    }}
+                  >
+                    <Share2 className="w-4 h-4 mr-2" />
+                    Share
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem
+                    onClick={() => {
+                      console.log("[v0] Delete clicked")
+                      handleDelete()
+                    }}
+                    className="text-destructive focus:text-destructive"
+                    disabled={isDeleting}
+                  >
+                    <X className="w-4 h-4 mr-2" />
+                    {isDeleting ? "Deleting..." : "Delete Prompt"}
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenuPortal>
             </DropdownMenu>
           </div>
 

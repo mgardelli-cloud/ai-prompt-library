@@ -9,6 +9,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
   DropdownMenuSeparator,
+  DropdownMenuPortal,
 } from "@/components/ui/dropdown-menu"
 
 export function DropdownTest() {
@@ -28,21 +29,23 @@ export function DropdownTest() {
               Controlled Menu
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuItem onClick={() => console.log("Item 1 clicked")}>
-              <Eye className="w-4 h-4 mr-2" />
-              Item 1
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => console.log("Item 2 clicked")}>
-              <Share2 className="w-4 h-4 mr-2" />
-              Item 2
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => console.log("Item 3 clicked")}>
-              <X className="w-4 h-4 mr-2" />
-              Item 3
-            </DropdownMenuItem>
-          </DropdownMenuContent>
+          <DropdownMenuPortal>
+            <DropdownMenuContent>
+              <DropdownMenuItem onClick={() => console.log("Item 1 clicked")}>
+                <Eye className="w-4 h-4 mr-2" />
+                Item 1
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => console.log("Item 2 clicked")}>
+                <Share2 className="w-4 h-4 mr-2" />
+                Item 2
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => console.log("Item 3 clicked")}>
+                <X className="w-4 h-4 mr-2" />
+                Item 3
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenuPortal>
         </DropdownMenu>
       </div>
 
@@ -56,16 +59,18 @@ export function DropdownTest() {
               Uncontrolled Menu
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuItem onClick={() => console.log("Uncontrolled Item 1")}>
-              <Eye className="w-4 h-4 mr-2" />
-              Uncontrolled Item 1
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => console.log("Uncontrolled Item 2")}>
-              <Share2 className="w-4 h-4 mr-2" />
-              Uncontrolled Item 2
-            </DropdownMenuItem>
-          </DropdownMenuContent>
+          <DropdownMenuPortal>
+            <DropdownMenuContent>
+              <DropdownMenuItem onClick={() => console.log("Uncontrolled Item 1")}>
+                <Eye className="w-4 h-4 mr-2" />
+                Uncontrolled Item 1
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => console.log("Uncontrolled Item 2")}>
+                <Share2 className="w-4 h-4 mr-2" />
+                Uncontrolled Item 2
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenuPortal>
         </DropdownMenu>
       </div>
 
@@ -82,21 +87,23 @@ export function DropdownTest() {
               <MoreHorizontal className="w-4 h-4" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem onClick={() => console.log("Icon menu item 1")}>
-              <Eye className="w-4 h-4 mr-2" />
-              Preview
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => console.log("Icon menu item 2")}>
-              <Share2 className="w-4 h-4 mr-2" />
-              Share
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => console.log("Icon menu item 3")}>
-              <X className="w-4 h-4 mr-2" />
-              Delete
-            </DropdownMenuItem>
-          </DropdownMenuContent>
+          <DropdownMenuPortal>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={() => console.log("Icon menu item 1")}>
+                <Eye className="w-4 h-4 mr-2" />
+                Preview
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => console.log("Icon menu item 2")}>
+                <Share2 className="w-4 h-4 mr-2" />
+                Share
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => console.log("Icon menu item 3")}>
+                <X className="w-4 h-4 mr-2" />
+                Delete
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenuPortal>
         </DropdownMenu>
       </div>
 
