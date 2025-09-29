@@ -35,7 +35,6 @@ interface PromptCardProps {
 export function PromptCard({ prompt }: PromptCardProps) {
   const [showPreview, setShowPreview] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const handleCopyUsage = async () => {
     const supabase = createClient()
@@ -65,8 +64,6 @@ export function PromptCard({ prompt }: PromptCardProps) {
     } catch (error) {
       console.error("Error sharing prompt:", error)
       // User cancelled sharing or other error
-    } finally {
-      setIsMenuOpen(false)
     }
   }, [prompt.id, prompt.title, prompt.description])
 
@@ -77,7 +74,6 @@ export function PromptCard({ prompt }: PromptCardProps) {
       }
 
       setIsDeleting(true)
-      setIsMenuOpen(false)
       const supabase = createClient()
 
       console.log("[v0] Deleting prompt with ID:", prompt.id)
@@ -128,50 +124,44 @@ export function PromptCard({ prompt }: PromptCardProps) {
                 </CardDescription>
               )}
             </div>
-            <DropdownMenu open={isMenuOpen} onOpenChange={setIsMenuOpen}>
+            <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="opacity-60 group-hover:opacity-100 smooth-transition hover:bg-muted/50 shrink-0 hover:opacity-100"
+                  className="opacity-60 group-hover:opacity-100 transition-opacity duration-200 hover:bg-muted/50 shrink-0 hover:opacity-100"
                   disabled={isDeleting}
                   aria-label="More options"
                 >
                   <MoreHorizontal className="w-4 h-4" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-48 z-[9999]" sideOffset={8}>
+              <DropdownMenuContent align="end" className="w-48" sideOffset={8}>
                 <DropdownMenuItem
-                  onClick={(e) => {
-                    e.preventDefault()
+                  onClick={() => {
                     console.log("[v0] Preview clicked")
                     setShowPreview(true)
-                    setIsMenuOpen(false)
                   }}
-                  className="font-extralight cursor-pointer"
                 >
                   <Eye className="w-4 h-4 mr-2" />
                   Preview
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                  onClick={(e) => {
-                    e.preventDefault()
+                  onClick={() => {
                     console.log("[v0] Share clicked")
                     handleShare()
                   }}
-                  className="font-extralight cursor-pointer"
                 >
                   <Share2 className="w-4 h-4 mr-2" />
                   Share
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
-                  onClick={(e) => {
-                    e.preventDefault()
+                  onClick={() => {
                     console.log("[v0] Delete clicked")
                     handleDelete()
                   }}
-                  className="font-extralight text-destructive focus:text-destructive cursor-pointer"
+                  className="text-destructive focus:text-destructive"
                   disabled={isDeleting}
                 >
                   <X className="w-4 h-4 mr-2" />

@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server"
 import { PromptGallery } from "@/components/prompt-gallery"
 import { Header } from "@/components/header"
+import { DropdownTest } from "@/components/dropdown-test"
 
 export default async function HomePage() {
   const supabase = await createClient()
@@ -54,6 +55,11 @@ export default async function HomePage() {
             </details>
           </div>
         )}
+
+        {/* Temporary dropdown test component */}
+        <div className="mb-8">
+          <DropdownTest />
+        </div>
 
         <PromptGallery prompts={prompts} />
       </main>
