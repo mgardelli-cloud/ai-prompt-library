@@ -122,7 +122,7 @@ export function PromptCard({ prompt }: PromptCardProps) {
 
   return (
     <>
-      <Card className="group hover-lift smooth-transition h-full flex flex-col bg-card/50 backdrop-blur-sm border-border/50">
+      <Card className="group h-full flex flex-col bg-card/50 backdrop-blur-sm border-border/50">
         <CardHeader className="pb-4">
           <div className="flex items-start justify-between gap-3">
             <div className="flex-1 min-w-0">
@@ -156,14 +156,15 @@ export function PromptCard({ prompt }: PromptCardProps) {
                 
                 {isMenuOpen && (
                   <>
-                    {/* Backdrop */}
+                    {/* Backdrop - Invisible and non-intrusive */}
                     <div 
-                      className="fixed inset-0 z-[9998]" 
+                      className="fixed inset-0 z-[9998] bg-transparent" 
                       onClick={() => setIsMenuOpen(false)}
+                      style={{ pointerEvents: 'auto' }}
                     />
                     
                     {/* Menu - Dark theme optimized */}
-                    <div className="absolute right-0 top-full mt-2 w-48 bg-white dark:bg-black border border-gray-300 dark:border-gray-700 rounded-md shadow-xl dark:shadow-2xl py-1 z-[9999]">
+                    <div className="absolute right-0 top-full mt-2 w-48 bg-white dark:bg-black border border-gray-300 dark:border-gray-700 rounded-md shadow-xl dark:shadow-2xl py-1 z-[9999] animate-in fade-in duration-150">
                       <button
                         className="w-full px-3 py-2 text-left hover:bg-gray-100 dark:hover:bg-gray-800 text-sm flex items-center text-gray-900 dark:text-gray-100 transition-colors"
                         onClick={(e) => {
@@ -225,7 +226,7 @@ export function PromptCard({ prompt }: PromptCardProps) {
           <div className="flex items-center gap-3 mt-4">
             <Badge
               variant="secondary"
-              className={`${getCategoryColor(prompt.category)} smooth-transition font-extralight`}
+              className={`${getCategoryColor(prompt.category)} font-extralight`}
             >
               {prompt.category.replace("-", " ")}
             </Badge>
@@ -239,20 +240,20 @@ export function PromptCard({ prompt }: PromptCardProps) {
               <Badge
                 key={tag}
                 variant="outline"
-                className="text-xs smooth-transition font-extralight hover:bg-muted/50"
+                className="text-xs font-extralight hover:bg-muted/50"
               >
                 {tag}
               </Badge>
             ))}
             {prompt.tags.length > 3 && (
-              <Badge variant="outline" className="text-xs smooth-transition font-extralight">
+              <Badge variant="outline" className="text-xs font-extralight">
                 +{prompt.tags.length - 3}
               </Badge>
             )}
           </div>
 
           <div className="mt-auto">
-            <CopyButton text={prompt.content} className="w-full smooth-transition" onCopy={handleCopyUsage} />
+            <CopyButton text={prompt.content} className="w-full" onCopy={handleCopyUsage} />
           </div>
         </CardContent>
       </Card>
