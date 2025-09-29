@@ -1,10 +1,6 @@
 import { createClient } from "@/lib/supabase/server"
 import { PromptGallery } from "@/components/prompt-gallery"
 import { Header } from "@/components/header"
-import { DropdownTest } from "@/components/dropdown-test"
-import { RadixNativeTest } from "@/components/radix-native-test"
-import { HtmlNativeTest } from "@/components/html-native-test"
-import { DatabaseDebug } from "@/components/database-debug"
 
 export default async function HomePage() {
   const supabase = await createClient()
@@ -57,23 +53,6 @@ export default async function HomePage() {
               </pre>
             </details>
           </div>
-        )}
-
-        {/* 🔴 Keep for debugging if needed */}
-        {process.env.NODE_ENV === 'development' && (
-          <>
-            <div className="mb-4">
-              <details className="bg-yellow-50 p-4 rounded-lg">
-                <summary className="font-medium cursor-pointer">🔧 Debug Components (Dev Only)</summary>
-                <div className="mt-4 space-y-4">
-                  <DatabaseDebug />
-                  <HtmlNativeTest />
-                  <RadixNativeTest />
-                  <DropdownTest />
-                </div>
-              </details>
-            </div>
-          </>
         )}
 
         <PromptGallery prompts={prompts} />
