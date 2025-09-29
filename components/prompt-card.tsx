@@ -77,20 +77,31 @@ export function PromptCard({ prompt }: PromptCardProps) {
       const supabase = createClient()
 
       console.log("[v0] Deleting prompt with ID:", prompt.id)
+      console.log("[v0] Prompt object:", prompt)
 
-      const { error } = await supabase.from("prompts").delete().eq("id", prompt.id)
+      // Try multiple approaches to ensure deletion
+      const { data, error, count } = await supabase
+        .from("prompts")
+        .delete({ count: 'exact' })
+        .eq("id", prompt.id)
+
+      console.log("[v0] Delete result:", { data, error, count })
 
       if (error) {
         console.error("[v0] Error deleting prompt:", error)
-        alert("Failed to delete prompt. Please try again.")
+        alert(`Failed to delete prompt: ${error.message}. Please check your permissions.`)
+      } else if (count === 0) {
+        console.warn("[v0] No rows were deleted - prompt may not exist or no permissions")
+        alert("No prompt was deleted. It may have already been removed or you don't have permission.")
       } else {
-        console.log("[v0] Prompt deleted successfully")
-        // Reload the page to refresh the prompt list
-        window.location.reload()
+        console.log(`[v0] Successfully deleted ${count} prompt(s)`)
+        alert("Prompt deleted successfully!")
+        // Force a hard reload to ensure fresh data
+        window.location.href = window.location.href
       }
     } catch (error) {
       console.error("[v0] Unexpected error deleting prompt:", error)
-      alert("An unexpected error occurred. Please try again.")
+      alert(`An unexpected error occurred: ${error instanceof Error ? error.message : 'Unknown error'}. Please try again.`)
     } finally {
       setIsDeleting(false)
     }
@@ -151,10 +162,10 @@ export function PromptCard({ prompt }: PromptCardProps) {
                       onClick={() => setIsMenuOpen(false)}
                     />
                     
-                    {/* Menu */}
-                    <div className="absolute right-0 top-full mt-2 w-48 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-lg py-1 z-[9999]">
+                    {/* Menu - Dark theme optimized */}
+                    <div className="absolute right-0 top-full mt-2 w-48 bg-white dark:bg-black border border-gray-300 dark:border-gray-700 rounded-md shadow-xl dark:shadow-2xl py-1 z-[9999]">
                       <button
-                        className="w-full px-3 py-2 text-left hover:bg-gray-100 dark:hover:bg-gray-700 text-sm flex items-center"
+                        className="w-full px-3 py-2 text-left hover:bg-gray-100 dark:hover:bg-gray-800 text-sm flex items-center text-gray-900 dark:text-gray-100 transition-colors"
                         onClick={(e) => {
                           e.preventDefault()
                           console.log("[v0] Fallback Preview clicked")
@@ -167,7 +178,7 @@ export function PromptCard({ prompt }: PromptCardProps) {
                       </button>
                       
                       <button
-                        className="w-full px-3 py-2 text-left hover:bg-gray-100 dark:hover:bg-gray-700 text-sm flex items-center"
+                        className="w-full px-3 py-2 text-left hover:bg-gray-100 dark:hover:bg-gray-800 text-sm flex items-center text-gray-900 dark:text-gray-100 transition-colors"
                         onClick={(e) => {
                           e.preventDefault()
                           console.log("[v0] Fallback Share clicked")
@@ -179,10 +190,10 @@ export function PromptCard({ prompt }: PromptCardProps) {
                         Share
                       </button>
                       
-                      <hr className="my-1 border-gray-200 dark:border-gray-600" />
+                      <hr className="my-1 border-gray-200 dark:border-gray-700" />
                       
                       <button
-                        className="w-full px-3 py-2 text-left hover:bg-red-100 dark:hover:bg-red-900/20 text-sm flex items-center text-red-600 dark:text-red-400 disabled:opacity-50"
+                        className="w-full px-3 py-2 text-left hover:bg-red-50 dark:hover:bg-red-950/30 text-sm flex items-center text-red-600 dark:text-red-400 disabled:opacity-50 transition-colors"
                         disabled={isDeleting}
                         onClick={(e) => {
                           e.preventDefault()
